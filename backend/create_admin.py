@@ -16,7 +16,7 @@ supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 async def setup():
     email = "admin@unthinkable.com"
-    password = "unthink123"
+    password = "u"
     name = "System Admin"
     
     print(f"Creating admin user in Supabase auth: {email}")
