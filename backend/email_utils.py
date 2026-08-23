@@ -1,39 +1,36 @@
 import os
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
+import httpx
 from dotenv import load_dotenv
 
 load_dotenv()
 
-SMTP_EMAIL = os.getenv("SMTP_EMAIL")
-SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
-
 def is_configured():
-    return bool(os.getenv("SMTP_EMAIL") and os.getenv("SMTP_PASSWORD"))
+    return bool(os.getenv("RESEND_API_KEY"))
 
 def send_email(to_email: str, subject: str, html_content: str):
-    smtp_email = os.getenv("SMTP_EMAIL")
-    smtp_password = os.getenv("SMTP_PASSWORD")
-    if not smtp_email or not smtp_password:
+    resend_key = os.getenv("RESEND_API_KEY")
+    if not resend_key:
         print(f"[Email Mock] To {to_email}: {subject}")
         return
 
-    msg = MIMEMultipart("alternative")
-    msg["Subject"] = subject
-    msg["From"] = f"Society Tracker <{smtp_email}>"
-    msg["To"] = to_email
-
-    part = MIMEText(html_content, "html")
-    msg.attach(part)
+    data = {
+        "from": "Society Tracker <onboarding@resend.dev>",
+        "to": [to_email],
+        "subject": subject,
+        "html": html_content
+    }
 
     try:
-        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-            server.login(smtp_email, smtp_password)
-            server.sendmail(smtp_email, to_email, msg.as_string())
-            print(f"Email sent successfully to {to_email}", flush=True)
+        with httpx.Client() as client:
+            response = client.post(
+                "https://api.resend.com/emails",
+                headers={"Authorization": f"Bearer {resend_key}"},
+                json=data
+            )
+            response.raise_for_status()
+            print(f"Email sent successfully to {to_email} via Resend", flush=True)
     except Exception as e:
-        print(f"Failed to send email: {e}", flush=True)
+        print(f"Failed to send email via Resend: {e}\nResponse: {getattr(e, 'response', None) and e.response.text}", flush=True)
         raise
 
 def send_status_update_email(to_email: str, complaint_title: str, new_status: str, note: str = None):
