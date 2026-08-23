@@ -16,6 +16,21 @@ export default function App() {
 
   useEffect(() => {
     initialize()
+    
+    // Ping backend to keep Render instance awake
+    const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'
+    const pingBackend = async () => {
+      try {
+        await fetch(`${API_BASE}/api/ping`)
+      } catch (e) {
+        // Ignore errors, we just want to wake it up
+      }
+    }
+    
+    pingBackend() // Initial ping
+    const interval = setInterval(pingBackend, 60 * 1000) // Ping every 60 seconds
+    
+    return () => clearInterval(interval)
   }, [initialize])
 
   if (isLoading) {

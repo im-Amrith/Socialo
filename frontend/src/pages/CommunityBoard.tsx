@@ -4,7 +4,7 @@ import { Search, Pin, Shield, Sparkles, AlertTriangle, Hammer, Calendar, Droplet
 import { useAuthStore } from '../store/authStore'
 import { supabase } from '../lib/supabase'
 
-const API_BASE = 'http://localhost:8000'
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'
 
 const CATEGORIES = [
   'Security', 'Housekeeping', 'General', 'Maintenance',

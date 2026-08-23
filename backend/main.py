@@ -56,8 +56,12 @@ async def get_current_user(
 
 async def get_current_admin(current_user: models.User = Depends(get_current_user)):
     if current_user.role != models.RoleEnum.ADMIN:
-        raise HTTPException(status_code=403, detail="Not enough privileges")
+        raise HTTPException(status_code=403, detail="Admin access required")
     return current_user
+
+@app.get("/api/ping")
+async def ping():
+    return {"status": "ok", "message": "Server is awake"}
 
 from sqlalchemy import text
 @app.on_event("startup")
