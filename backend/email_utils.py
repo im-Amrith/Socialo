@@ -13,7 +13,7 @@ def send_email(to_email: str, subject: str, html_content: str):
     data = {
         "sender": {
             "name": "Society Tracker",
-            "email": "amrithesh23@gmail.com"
+            "email": os.getenv("BREVO_SENDER_EMAIL", "iamangel2305@gmail.com")
         },
         "to": [
             {
