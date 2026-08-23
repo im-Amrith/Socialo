@@ -8,7 +8,7 @@ Socialo is a robust, responsive web application built to streamline community an
 - **Database**: PostgreSQL (managed via Supabase).
 - **Authentication**: Supabase Auth.
 - **Media Storage**: Google Drive API.
-- **Notifications**: Background Tasks with Gmail SMTP.
+- **Notifications**: Background Tasks with Brevo HTTP API.
 
 ---
 
@@ -19,14 +19,14 @@ Socialo is a robust, responsive web application built to streamline community an
 - Python (v3.10+)
 - A Supabase Project
 - A Google Cloud Project with Google Drive API enabled (and a Service Account JSON key)
-- A Gmail account with an App Password generated for SMTP
+- A free Brevo (Sendinblue) account for the email HTTP API
 
 ### 2. Environment Variables
 Copy the provided `.env.example` to the respective backend and frontend directories.
 - `backend/.env`
 - `frontend/.env`
 
-Ensure you fill in your Supabase URLs, database connection strings, and SMTP credentials.
+Ensure you fill in your Supabase URLs, database connection strings, and `BREVO_API_KEY`.
 
 ### 3. Backend Setup
 1. Navigate to the backend directory: `cd backend`
