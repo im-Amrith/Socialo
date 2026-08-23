@@ -1,0 +1,22 @@
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Folders to ignore
+test_photo/
+node_modules/
+dist/
+build/
+backend/venv/
+backend/__pycache__/
+*.pyc
+
+# Secrets
+client_secret*.json
+
+# IDEs and OS files
+.vscode/
+.idea/
+.DS_Store
+*.log

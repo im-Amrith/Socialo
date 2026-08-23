@@ -1,0 +1,40 @@
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/geist";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #FDF8E1;
+    --foreground: #3F3F3F;
+    --card: #FFFFFF;
+    --card-foreground: #3F3F3F;
+    --popover: #FFFFFF;
+    --popover-foreground: #3F3F3F;
+    --primary: #F9ED85;
+    --primary-foreground: #3F3F3F;
+    --secondary: #F8DFC1;
+    --secondary-foreground: #3F3F3F;
+    --muted: #FCEFB4;
+    --muted-foreground: #595959;
+    --accent: #EEC18E;
+    --accent-foreground: #3F3F3F;
+    --destructive: #ef4444;
+    --destructive-foreground: #f8fafc;
+    --border: #F8DFC1;
+    --input: #F8DFC1;
+    --ring: #EEC18E;
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
