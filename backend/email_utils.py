@@ -10,16 +10,18 @@ SMTP_EMAIL = os.getenv("SMTP_EMAIL")
 SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
 
 def is_configured():
-    return bool(SMTP_EMAIL and SMTP_PASSWORD)
+    return bool(os.getenv("SMTP_EMAIL") and os.getenv("SMTP_PASSWORD"))
 
 def send_email(to_email: str, subject: str, html_content: str):
-    if not is_configured():
+    smtp_email = os.getenv("SMTP_EMAIL")
+    smtp_password = os.getenv("SMTP_PASSWORD")
+    if not smtp_email or not smtp_password:
         print(f"[Email Mock] To {to_email}: {subject}")
         return
 
     msg = MIMEMultipart("alternative")
     msg["Subject"] = subject
-    msg["From"] = f"Society Tracker <{SMTP_EMAIL}>"
+    msg["From"] = f"Society Tracker <{smtp_email}>"
     msg["To"] = to_email
 
     part = MIMEText(html_content, "html")
@@ -27,8 +29,8 @@ def send_email(to_email: str, subject: str, html_content: str):
 
     try:
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-            server.login(SMTP_EMAIL, SMTP_PASSWORD)
-            server.sendmail(SMTP_EMAIL, to_email, msg.as_string())
+            server.login(smtp_email, smtp_password)
+            server.sendmail(smtp_email, to_email, msg.as_string())
             print(f"Email sent successfully to {to_email}")
     except Exception as e:
         print(f"Failed to send email: {e}")

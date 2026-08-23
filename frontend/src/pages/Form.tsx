@@ -90,7 +90,7 @@ export default function Form() {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <div className="bg-white rounded-[2rem] p-10 shadow-sm border border-amber-900/10 relative overflow-hidden">
+      <div className="bg-white rounded-[2rem] p-6 md:p-10 shadow-sm border border-amber-900/10 relative overflow-hidden">
         
         <div className="max-w-xl relative z-10 mb-10">
           <h2 className="text-3xl font-serif font-bold text-amber-950 mb-3">Submit a Maintenance Ticket</h2>

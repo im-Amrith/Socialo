@@ -44,10 +44,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   ]
 
   return (
-    <div className="flex h-screen bg-[#FDF8E1] overflow-hidden text-amber-950">
+    <div className="flex h-[100dvh] bg-[#FDF8E1] overflow-hidden text-amber-950">
       {/* Sidebar */}
       <aside 
-        className={`bg-[#FDF8E1] border-r border-amber-900/10 transition-all duration-300 flex flex-col ${isCollapsed ? 'w-20' : 'w-64'}`}
+        className={`hidden md:flex bg-[#FDF8E1] border-r border-amber-900/10 transition-all duration-300 flex-col ${isCollapsed ? 'w-20' : 'w-64'}`}
       >
         <div className="p-6 flex items-center gap-3">
           <div className="bg-amber-100 p-2 rounded-xl">
@@ -111,11 +111,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       {/* Main Area */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Top Navbar */}
-        <header className="h-20 bg-white/50 backdrop-blur-md border-b border-amber-900/5 flex items-center justify-between px-8">
+        <header className="h-16 md:h-20 bg-white/50 backdrop-blur-md border-b border-amber-900/5 flex items-center justify-between px-4 md:px-8">
           <div className="flex items-center gap-4">
             <button 
               onClick={() => setIsCollapsed(!isCollapsed)}
-              className="p-2 bg-white rounded-lg border border-amber-100 hover:bg-amber-50 transition-colors mr-4"
+              className="hidden md:block p-2 bg-white rounded-lg border border-amber-100 hover:bg-amber-50 transition-colors mr-4"
             >
               <Menu className="w-5 h-5 text-amber-900" />
             </button>
@@ -160,9 +160,26 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </header>
 
         {/* Page Content */}
-        <main className="flex-1 overflow-y-auto p-8 relative">
+        <main className="flex-1 overflow-y-auto p-4 md:p-8 relative pb-24 md:pb-8">
           {children}
         </main>
+      </div>
+
+      {/* Mobile Bottom Navigation */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-amber-900/10 flex justify-around p-3 pb-safe z-50 shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
+        {navItems.map(item => {
+          const isActive = location.pathname === item.path || (item.path !== '/' && location.pathname.startsWith(item.path))
+          return (
+            <Link 
+              key={item.name} 
+              to={item.path} 
+              className={`flex flex-col items-center gap-1 min-w-[70px] ${isActive ? 'text-amber-700' : 'text-amber-800/50'}`}
+            >
+              <item.icon className="w-5 h-5" />
+              <span className="text-[10px] font-bold mt-0.5">{item.name === 'Community Board' ? 'Community' : item.name}</span>
+            </Link>
+          )
+        })}
       </div>
     </div>
   )
