@@ -43,7 +43,6 @@ export default function Form() {
            alert("Failed to upload image.");
         } else {
            const signData = await signRes.json();
-           const { signedUrl, path } = signData; // Wait, supabase returns signed_url
            const uploadUrl = signData.signed_url || signData.signedUrl || signData.url;
            
            // Upload directly using PUT

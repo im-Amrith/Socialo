@@ -215,7 +215,7 @@ export default function AdminDashboard() {
         {Object.entries(stats.byCategory).map(([cat, count]) => (
           <div key={cat} className="flex items-center gap-1.5 px-3 py-1 bg-[#FDF8E1] text-amber-900 rounded-full border border-amber-900/5">
             <span className="opacity-70 font-medium">{cat}:</span>
-            <span className="font-bold">{count}</span>
+            <span className="font-bold">{String(count)}</span>
           </div>
         ))}
         {Object.keys(stats.byCategory).length === 0 && (
@@ -244,7 +244,7 @@ export default function AdminDashboard() {
                 <tr>
                   <td colSpan={8} className="py-8 text-center text-amber-800/60">Loading...</td>
                 </tr>
-              ) : filteredComplaints.map((complaint, i) => {
+              ) : filteredComplaints.map((complaint) => {
                 const { due, overdue } = calculateSLA(complaint)
                 const isOverdueAndOpen = overdue && complaint.status !== 'RESOLVED'
                 const rowBg = isOverdueAndOpen ? 'bg-orange-50/30 hover:bg-orange-50' : 'bg-white hover:bg-amber-50/30'

@@ -6,18 +6,12 @@ import {
   Users, 
   Ticket, 
   Bell, 
-  FileText, 
-  Settings, 
   HeadphonesIcon,
   ChevronLeft,
   ChevronRight,
   LogOut,
   User as UserIcon,
-  Menu,
-  Clock,
-  BarChart,
-  FolderOpen,
-  Wrench
+  Menu
 } from 'lucide-react'
 import { useAuthStore } from '../store/authStore'
 

@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore'
 import { supabase } from '../lib/supabase'
 import { 
-  ChevronLeft, Send, ClipboardCheck, User, PenTool, Check, Star, MessageSquare
+  ChevronLeft, Send, ClipboardCheck, User, PenTool, Check, MessageSquare
 } from 'lucide-react'
 import { format } from 'date-fns'
 
