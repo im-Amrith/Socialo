@@ -31,9 +31,10 @@ def send_email(to_email: str, subject: str, html_content: str):
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
             server.login(smtp_email, smtp_password)
             server.sendmail(smtp_email, to_email, msg.as_string())
-            print(f"Email sent successfully to {to_email}")
+            print(f"Email sent successfully to {to_email}", flush=True)
     except Exception as e:
-        print(f"Failed to send email: {e}")
+        print(f"Failed to send email: {e}", flush=True)
+        raise
 
 def send_status_update_email(to_email: str, complaint_title: str, new_status: str, note: str = None):
     html_content = f"<h2>Update on your complaint: {complaint_title}</h2><p>The status of your complaint has been updated to: <strong>{new_status}</strong></p>"
