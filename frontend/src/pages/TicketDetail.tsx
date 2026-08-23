@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore'
 import { supabase } from '../lib/supabase'
 import { 
@@ -11,6 +11,7 @@ const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'
 
 export default function TicketDetail() {
   const { id } = useParams()
+  const navigate = useNavigate()
   const [complaint, setComplaint] = useState<any>(null)
   const [loading, setLoading] = useState(true)
 
@@ -149,7 +150,7 @@ export default function TicketDetail() {
         headers: { 'Authorization': `Bearer ${token}` }
       })
       if (res.ok) {
-        window.location.href = isAdmin ? '/admin' : '/tickets'
+        navigate(isAdmin ? '/admin' : '/tickets', { replace: true })
       } else {
         const err = await res.json()
         alert(`Error deleting complaint: ${err.detail || 'Unknown error'}`)
