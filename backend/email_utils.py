@@ -1,36 +1,44 @@
 import os
 import httpx
-from dotenv import load_dotenv
-
-load_dotenv()
 
 def is_configured():
-    return bool(os.getenv("RESEND_API_KEY"))
+    return bool(os.getenv("BREVO_API_KEY"))
 
 def send_email(to_email: str, subject: str, html_content: str):
-    resend_key = os.getenv("RESEND_API_KEY")
-    if not resend_key:
+    api_key = os.getenv("BREVO_API_KEY")
+    if not api_key:
         print(f"[Email Mock] To {to_email}: {subject}")
         return
 
     data = {
-        "from": "Society Tracker <onboarding@resend.dev>",
-        "to": [to_email],
+        "sender": {
+            "name": "Society Tracker",
+            "email": "amrithesh23@gmail.com"
+        },
+        "to": [
+            {
+                "email": to_email
+            }
+        ],
         "subject": subject,
-        "html": html_content
+        "htmlContent": html_content
     }
 
     try:
         with httpx.Client() as client:
             response = client.post(
-                "https://api.resend.com/emails",
-                headers={"Authorization": f"Bearer {resend_key}"},
+                "https://api.brevo.com/v3/smtp/email",
+                headers={
+                    "api-key": api_key,
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
                 json=data
             )
             response.raise_for_status()
-            print(f"Email sent successfully to {to_email} via Resend", flush=True)
+            print(f"Email sent successfully to {to_email} via Brevo", flush=True)
     except Exception as e:
-        print(f"Failed to send email via Resend: {e}\nResponse: {getattr(e, 'response', None) and e.response.text}", flush=True)
+        print(f"Failed to send email via Brevo: {e}\nResponse: {getattr(e, 'response', None) and e.response.text}", flush=True)
         raise
 
 def send_status_update_email(to_email: str, complaint_title: str, new_status: str, note: str = None):
