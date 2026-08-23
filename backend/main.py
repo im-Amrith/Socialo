@@ -281,3 +281,11 @@ async def ai_verify(
 ):
     from ai_utils import verify_image_relevance
     return verify_image_relevance(req.image_url, req.description)
+@app.get("/api/test-email")
+def test_email_endpoint(email: str):
+    import traceback
+    try:
+        email_utils.send_email(email, "Test Subject", "<p>Test Content</p>")
+        return {"status": "success", "message": f"Check terminal or {email} inbox"}
+    except Exception as e:
+        return {"status": "error", "message": str(e), "traceback": traceback.format_exc()}
